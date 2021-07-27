@@ -6,7 +6,7 @@ import {
   SET_SEARCH
 } from './actions';
 
-export default appReducer(state, action) {
+const appReducer = (state, action) => {
   switch (action.type) {
     case ADD_DOCUMENT:
       return {
@@ -39,9 +39,9 @@ export default appReducer(state, action) {
         ...state, // cp state, overwriting search text
         search: action.payload.text
       }
-    
-
     default:
       return state;
   }
-}
+};
+
+export default appReducer;
