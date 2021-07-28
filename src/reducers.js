@@ -1,47 +1,47 @@
+import { combineReducers } from "redux";
 import {
   ADD_DOCUMENT,
   UPDATE_DOCUMENT,
   DELETE_DOCUMENT,
   SET_SELECTED,
-  SET_SEARCH
-} from './actions';
+  SET_SEARCH,
+} from "./actions";
 
-const appReducer = (state, action) => {
+function documents(state = [], action) {
   switch (action.type) {
     case ADD_DOCUMENT:
-      return {
-        ...state, // cp state, overwriting documents
-        documents: [
-          // Copy of existing documents + new document
-        ]
-      }
+      return [
+        ...state, // copy (slice of) state passed in
+        action.payload,
+      ];
     case DELETE_DOCUMENT:
-      return {
-        ...state, // cp state, overwriting documents
-        documents: [
-          // Copy of existing documents - one to delete
-        ]
-      }
+      // copy of state Array, filtering out doc ID is in payload
+      return state.filter((doc) => doc.id !== action.payload.id);
     case UPDATE_DOCUMENT:
-      return {
-        ...state, // cp state, overwriting documents
-        documents: [
-          // Copy of existing documents, modifying matching doc
-        ]
-      }
-    case SET_SELECTED:
-      return {
-        ...state, // cp state, overwriting selected ID
-        selected: action.payload.id
-      }
-    case SET_SEARCH:
-      return {
-        ...state, // cp state, overwriting search text
-        search: action.payload.text
-      }
-    default:
-      return state;
+      // copy of state Array, altering the single doc whose ID is in the payload
+      return state.map((doc) =>
+        doc.id !== action.payload.id ? doc : { ...action.payload }
+      );
   }
-};
+  return state;
+}
 
-export default appReducer;
+function selected(state = "", action) {
+  // action that returns the value from the payload
+  //  when they are responsible for handling.
+  switch (action.type) {
+    case SET_SELECTED:
+      return action.payload.id;
+  }
+  return state;
+}
+
+function search() {
+  // action that returns the value from the payload
+  //  when they are responsible for handling.
+  switch(action.type) {
+    case SET_SEARCH:
+      return action.payload.text;
+  }
+  return state;
+}
