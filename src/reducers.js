@@ -1,3 +1,4 @@
+// Combine Reducers, step 1: get combine reducers function from redux
 import { combineReducers } from "redux";
 import {
   ADD_DOCUMENT,
@@ -45,3 +46,11 @@ function search() {
   }
   return state;
 }
+
+// Combine Reducers, step 2: call combineReducers(), pass Obj, Key (slice of state): Value (name of Reducer function)
+// as you see above I created 3 reducer functions: 1. documents, 2. selected, 3. search.  Here I am assigning these functions inside of Obje and passing it inside of combineReducers()
+export const rootReducer = combineReducers({
+  documents: documents,
+  selected: selected,
+  search: search,
+});
