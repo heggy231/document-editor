@@ -1,5 +1,6 @@
 import { v4 as uuidv4 } from "uuid";
 
+// Define action constants to have good error messages
 export const ADD_DOCUMENT = "ADD_DOCUMENT";
 export const DELETE_DOCUMENT = "DELETE_DOCUMENT";
 export const UPDATE_DOCUMENT = "UPDATE_DOCUMENT";

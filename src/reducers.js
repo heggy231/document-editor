@@ -12,8 +12,8 @@ function documents(state = [], action) {
   switch (action.type) {
     case ADD_DOCUMENT:
       return [
-        ...state, // copy (slice of) state passed in
-        action.payload,
+        ...state, // copy (slice of) state passed in, particularly for slice that this reducer is responsible for.
+        action.payload,  // looking back at my action creator action.type: ADD_DOCUMENT, action.payload obj include id, title, content.
       ];
     case DELETE_DOCUMENT:
       // copy of state Array, filtering out doc ID is in payload
