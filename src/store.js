@@ -7,3 +7,10 @@ const defaultState = {
   search: ''
 }
 
+// call createStore() fx, pass defaultState along with rootReducer, export it.
+const store = createStore(
+  rootReducer,
+  defaultState
+);
+
+export default store;
