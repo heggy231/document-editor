@@ -195,3 +195,15 @@ function documents(state = [], action) {
             action.payload,  // looking back at my action creator action.type: ADD_DOCUMENT, action.payload obj include id, title, content.
           ];
     ```
+
+### Create Redux Store:
+- [Redux doc site](https://redux.js.org/usage/structuring-reducers/using-combinereducers) 
+
+```js
+// import comineReducers, createStore
+import { combineReducers, createStore } from "redux";
+
+
+// end of the file createStore(), pass rootReducer as param
+const reducerInitializedStore = createStore(rootReducer)
+```
