@@ -1,5 +1,14 @@
 # [File Editor Part 1](https://learn.digitalcrafts.com/flex/lessons/full-stack-frameworks/multiple-reducers/#setting-up)
 
+- Console demo:
+
+![console1](./public/console1.png)
+![console2](./public/console2.png)
+![console3](./public/console3.png)
+![console4](./public/console4.png)
+![console5](./public/console5.png)
+
+
 - create js files actions, reducers, store
 
 * The workflow Redux:
@@ -207,3 +216,48 @@ import { combineReducers, createStore } from "redux";
 // end of the file createStore(), pass rootReducer as param
 const reducerInitializedStore = createStore(rootReducer)
 ```
+
+## Test it out in console:
+```js
+store.getState() // nothing in there. {documents: [], selected: "", search: ""}
+// Add title and content to my document app.  Remember the function signature for addDocument(title, content)
+store.dispatch(addDocument("Green Ham", "Once upon a time Green Ham and two eggs")); // action.type "ADD_DOCUMENT" => {type: "ADD_DOCUMENT", payload: {content: "Once upon a time Green Ham and two eggs, id: "6cada04b-8650-4c83-99d9-33a76105165b", title: "Green Ham"}}
+store.getState() // see the new state. {documents: [{id: "6cada04b-8650-4c83-99d9-33a76105165b", title: "Green Ham", content: "Once upon a time Green Ham and two eggs"}], selected: "", search: ""}
+
+// setSearch(text)
+store.dispatch(setSearch('eggs')) // action.type "SET_SEARCH" => {type: "SET_SEARCH", payload: {text: "eggs"}}
+// view the newly update state after setSearch('eggs')
+store.getState() // {documents: [{id: "6cada04b-8650-4c83-99d9-33a76105165b", title: "Green Ham", content: "Once upon a time Green Ham and two eggs"}], selected: "", search: "eggs"}
+
+// add another document
+store.dispatch(addDocument("Erin the rainbow bunny", "Once upon a time, a tomato vine grew a rainbow tomato")); // => {type: "ADD_DOCUMENT", payload: {content: "Once upon a time, a tomato vine grew a rainbow tomato, id: "2e7687ac-7aba-4258-a297-d6f23a94917f", title: "Erin the rainbow bunny"}}
+// see new state
+store.getState() // {documents: [{id: "6cada04b-8650-4c83-99d9-33a76105165b", title: "Green Ham", content: "Once upon a time Green Ham and two eggs"}, {id: "2e7687ac-7aba-4258-a297-d6f23a94917f", title: "Erin the rainbow bunny", content: "Once upon a time, a tomato vine grew a rainbow tomato"}], selected: "", search: "eggs"}
+
+// delete a doc by ID
+store.dispatch(delDocument("6cada04b-8650-4c83-99d9-33a76105165b")) // => {type: "DELETE_DOCUMENT", payload: {id: "6cada04b-8650-4c83-99d9-33a76105165b"}}
+// see newly updated state after deleting
+store.getState() // => {documents: [{id: "2e7687ac-7aba-4258-a297-d6f23a94917f", title: "Erin the rainbow bunny", content: "Once upon a time, a tomato vine grew a rainbow tomato"}], selected: "", search: "eggs"}]}.  Notice now I have only one document.  The doc with green ham is gone.
+
+// update a doc look up by ID
+/**
+ * Let's first review my updateDocument action creator function.
+ * actionCreator function updateDocument(id, title, content) which returns payload.id, title, content
+ * 
+ * action.type of UPDATE_DOCUMENT:
+ *   returns state.map((doc) => 
+ * // each doc of array, if doc.id passed in doesn't match the action.payload.id then pass the doc obj as it is (do not update).  Else, update the user passed in `doc.id` that matches its document obj => altered title and content as user wishes.
+ *    doc.id !== action.payload.id ? doc : { ...action.payload })
+ * 
+*/
+store.dispatch(updateDocument("07b59cdc-7698-44d8-af94-8aef3080f3c6", "purple egg", "Once upon a time Purple Ham and two eggs"))
+// => {type: "UPDATE_DOCUMENT", payload: {id: "07b59cdc-7698-44d8-af94-8aef3080f3c6", title: "purple egg", content: "Once upon a time Purple Ham and two eggs"}}
+store.getState() // => {documents: [{id: "07b59cdc-7698-44d8-af94-8aef3080f3c6", title: "purple egg", content: "Once upon a time Purple Ham and two eggs"}, {id: "2e7687ac-7aba-4258-a297-d6f23a94917f", title: "Erin the rainbow bunny", content: "Once upon a time, a tomato vine grew a red tomato"}], selected: "", search: "eggs"}  
+
+// select a doc by ID
+store.dispatch(setSelected("2e7687ac-7aba-4258-a297-d6f23a94917f"))
+// => {type: "SET_SELECTED", payload: {id: "2e7687ac-7aba-4258-a297-d6f23a94917f"}}
+store.getState() // => {documents: [{},{}], selected: "2e7687ac-7aba-4258-a297-d6f23a94917f", search: "eggs"}
+
+```
+
