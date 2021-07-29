@@ -16,7 +16,7 @@ function documents(state = [], action) {
         action.payload,  // looking back at my action creator action.type: ADD_DOCUMENT, action.payload obj include id, title, content.
       ];
     case DELETE_DOCUMENT:
-      // copy of state Array, filtering out doc ID is in payload
+      // copy of state Array, filtering out if doc ID matches and keeps everything else.  which in turn deletes doc.id that passed in.
       return state.filter((doc) => doc.id !== action.payload.id);
     case UPDATE_DOCUMENT:
       // copy of state Array, altering the single doc whose ID is in the payload

@@ -170,7 +170,7 @@ function documents(state = [], action) {
 * Let's look at `case DELETE_DOCUMENT`:
 
   - Where does `doc.id !== action.payload.id`'s `action.payload.id` comes from?  
-    * my action creator function gets passed in as a param: `action`.  
+    * my action creator function gets passed in as a param: `action`.  This is the key where all the payload obj key:value pairs are passed in.
     
     * case1) 
     ```js
