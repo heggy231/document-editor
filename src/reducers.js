@@ -9,6 +9,9 @@ import {
 } from "./actions";
 
 function documents(state = [], action) {
+  // note all reducers fx has `param` `action` passed in as a second argument 
+  //  reducers works together with action creator
+  //  functions in `actions.js`.
   switch (action.type) {
     case ADD_DOCUMENT:
       return [
@@ -24,7 +27,7 @@ function documents(state = [], action) {
         doc.id !== action.payload.id ? doc : { ...action.payload }
       );
   }
-  return state;
+  return state;  // always return state as-it-is for catch all cases
 }
 
 function selected(state = "", action) {
@@ -37,8 +40,8 @@ function selected(state = "", action) {
   return state;
 }
 
-function search() {
-  // action that returns the value from the payload
+function search(state='', action) {
+  // action (refer to setSearch action creator) that returns the value from the payload
   //  when they are responsible for handling.
   switch(action.type) {
     case SET_SEARCH:
@@ -47,10 +50,10 @@ function search() {
   return state;
 }
 
-// Combine Reducers, step 2: call combineReducers(), pass Obj, Key (slice of state): Value (name of Reducer function)
-// as you see above I created 3 reducer functions: 1. documents, 2. selected, 3. search.  Here I am assigning these functions inside of Obje and passing it inside of combineReducers()
+// Combine Reducers into one: step 2: call combineReducers(), pass Obj, Key (slice of state): Value (name of Reducer function)
+// I created 3 reducer functions (inside this reducers.js file): 1. documents, 2. selected, 3. search.  Here I am assigning these functions inside of Obj and passing it inside of combineReducers()
 export const rootReducer = combineReducers({
-  documents,
+  documents, // this is shorthand syntax for `documents: documents`
   selected,
   search,
 });
